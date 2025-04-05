@@ -14,6 +14,7 @@ import { accessInviteLinkRoute } from './routes/access-invite-link-route'
 import { getSubscriberRankingPositionRoute } from './routes/get-subscriber-ranking-position-route'
 import { getSubscriberInvitesCountRoute } from './routes/get-subscriber-invites-count-route'
 import { getSubscriberInviteClicksRoute } from './routes/get-subscriber-invite-clicks-route'
+import { getRankingRoute } from './routes/get-ranking-route'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -28,23 +29,24 @@ app.register(fastifySwagger, {
   openapi: {
     info: {
       title: 'nlw connect',
-      version: '0.0.1',
+      version: '0.1',
     },
   },
   transform: jsonSchemaTransform,
 })
 
 app.register(fastifySwaggerUi, {
-  routePrefix: '/docs,',
+  routePrefix: '/docs',
 })
 
 // routes
 app.register(subscribeToEventRoute)
 app.register(accessInviteLinkRoute)
+app.register(getRankingRoute)
 app.register(getSubscriberInviteClicksRoute)
 app.register(getSubscriberInvitesCountRoute)
 app.register(getSubscriberRankingPositionRoute)
 
 app.listen({ port: env.PORT }).then(() => {
-  console.log('Hello World!')
+  console.log(`🚀 Documentation http://localhost:${env.PORT}/docs`)
 })
